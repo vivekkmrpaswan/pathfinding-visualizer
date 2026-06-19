@@ -55,6 +55,7 @@ export function Nav({
   const handlerRunVisualizer = () => {
     if (isGraphVisualized) {
       setIsGraphVisualized(false);
+      setMaze("NONE");
       resetGrid({ grid: grid.slice(), startTile, endTile });
       return;
     }
