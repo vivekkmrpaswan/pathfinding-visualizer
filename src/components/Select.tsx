@@ -6,13 +6,13 @@ export function Select({
   options,
   label,
   isDisabled,
-}: {
+}: Readonly<{
   value: string | number;
   label: string;
   onChange: (value: ChangeEvent<HTMLSelectElement>) => void;
   options: { value: string | number; name: string }[];
   isDisabled?: boolean;
-}) {
+}>) {
   return (
     <div className="flex flex-col items-start gap-1">
       <label className="text-xs text-gray-300 ml-1 ">{label}</label>

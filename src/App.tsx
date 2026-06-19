@@ -6,17 +6,18 @@ import { useRef } from "react";
 import { Nav } from "./components/Nav";
 
 function App() {
-
-  const isVisualizationRunningRef = useRef(false)
+  const isVisualizationRunningRef = useRef(false);
 
   return (
     <PathfindingProvider>
       <TileProvider>
         <SpeedProvider>
-        <div className="h-screen w-screen flex flex-col">
-          <Nav isVisualizationRunningRef={isVisualizationRunningRef}/>
-          <Grid isVisualizationRunningRef={isVisualizationRunningRef}/>
-        </div>
+          <div className="h-svh w-svw flex">
+            <Nav isVisualizationRunningRef={isVisualizationRunningRef} />
+            <div className="flex-1 flex items-center justify-center pb-7 overflow-auto">
+              <Grid isVisualizationRunningRef={isVisualizationRunningRef} />
+            </div>
+          </div>
         </SpeedProvider>
       </TileProvider>
     </PathfindingProvider>

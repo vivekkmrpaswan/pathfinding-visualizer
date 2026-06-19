@@ -9,9 +9,7 @@ import {
   WALL_TILE_STYLE,
 } from "../utils/constants";
 
-interface MouseFunction {
-  (row: number, col: number): void;
-}
+type MouseFunction = (row: number, col: number) => void;
 
 export function Tile({
   row,
@@ -24,7 +22,7 @@ export function Tile({
   handleMouseDown,
   handleMouseUp,
   handleMouseEnter,
-}: {
+}: Readonly<{
   row: number;
   col: number;
   isStart: boolean;
@@ -35,7 +33,7 @@ export function Tile({
   handleMouseDown: MouseFunction;
   handleMouseUp: MouseFunction;
   handleMouseEnter: MouseFunction;
-}) {
+}>) {
   let tileTyleStyle;
 
   if (isStart) {

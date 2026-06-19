@@ -7,9 +7,9 @@ import { checkIfStartOrEnd, createNewGrid } from "../utils/helpers";
 
 export function Grid({
   isVisualizationRunningRef,
-}: {
+}: Readonly<{
   isVisualizationRunningRef: MutableRefObject<boolean>;
-}) {
+}>) {
   const { grid, setGrid } = usePathfinding();
   const [isMouseDown, setIsMouseDown] = useState(false);
 
