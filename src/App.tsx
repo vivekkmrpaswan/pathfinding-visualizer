@@ -1,6 +1,6 @@
-import { PathfindingProvider } from "./context/PathfindingContext";
-import { TileProvider } from "./context/TileContext";
-import { SpeedProvider } from "./context/SpeedContext";
+import { PathfindingProvider } from "./context/PathfindingProvider";
+import { TileProvider } from "./context/TileProvider";
+import { SpeedProvider } from "./context/SpeedProvider";
 import { Grid } from "./components/Grid";
 import { useRef } from "react";
 import { Nav } from "./components/Nav";

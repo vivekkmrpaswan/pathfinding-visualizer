@@ -1,6 +1,11 @@
 import { usePathfinding } from "../hooks/usePathfinding";
 import { Select } from "./Select";
-import { MAZES, PATHFINDING_ALGORITHMS, SPEEDS } from "../utils/constants";
+import {
+  MAZES,
+  PATHFINDING_ALGORITHMS,
+  RESET_BUTTON_DELAY,
+  SPEEDS,
+} from "../utils/constants";
 import { AlgorithmType, MazeType, SpeedType } from "../utils/types";
 import { resetGrid } from "../utils/resetGrid";
 import { useTile } from "../hooks/useTile";
@@ -73,9 +78,12 @@ export function Nav({
     animatePath(traversedTiles, path, startTile, endTile, speed).then(() => {
       const newGrid = grid.slice();
       setGrid(newGrid);
-      setIsGraphVisualized(true);
-      setIsDisabled(false);
-      isVisualizationRunningRef.current = false;
+
+      setTimeout(() => {
+        setIsGraphVisualized(true);
+        setIsDisabled(false);
+        isVisualizationRunningRef.current = false;
+      }, RESET_BUTTON_DELAY);
     });
   };
 

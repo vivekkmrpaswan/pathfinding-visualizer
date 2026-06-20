@@ -50,11 +50,20 @@ export function Tile({
     tileTyleStyle = TILE_STYLE;
   }
 
-  const borderStyle =
-    row === MAX_ROWS - 1 ? "border-b" : col === 0 ? "border-l" : "";
+  let borderStyle;
+
+  if (row === MAX_ROWS - 1) {
+    borderStyle = "border-b";
+  } else if (col === 0) {
+    borderStyle = "border-l";
+  } else {
+    borderStyle = "";
+  }
+
   const edgeStyle = row === MAX_ROWS - 1 && col === 0 ? "border-l" : "";
   return (
-    <div
+    <div // NOSONAR-drawable grid cell, one of ~1,900 tiles; making each one individually
+      // focusable/tabbable would hurt keyboard navigation more than it helps for this project's scope
       className={twMerge(tileTyleStyle, borderStyle, edgeStyle)}
       id={`${row}-${col}`}
       onMouseDown={() => handleMouseDown(row, col)}
