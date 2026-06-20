@@ -81,7 +81,16 @@ export function Nav({
 
   return (
     <div className="flex flex-col items-start h-screen w-64 shrink-0 border-r shadow-gray-600 px-5 py-8 overflow-y-auto">
-      <h1 className="text-xl text-center mb-8">Pathfinding Visualizer</h1>
+      <div className="flex items-center gap-2 w-full mb-8">
+        <img
+          src="/pathfinding-visualizer.png"
+          alt="pathfinding visualizer"
+          className="w-8 h-8"
+        />
+        <h1 className="font-bold leading-tight text-start mb-2">
+          Pathfinding <span className="text-amber-400">Visualizer</span>
+        </h1>
+      </div>
       <div className="flex flex-col space-y-5 w-full">
         <Select
           label="maze"

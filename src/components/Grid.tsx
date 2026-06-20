@@ -10,11 +10,16 @@ export function Grid({
 }: Readonly<{
   isVisualizationRunningRef: MutableRefObject<boolean>;
 }>) {
-  const { grid, setGrid } = usePathfinding();
+  const { grid, setGrid, maze } = usePathfinding();
   const [isMouseDown, setIsMouseDown] = useState(false);
 
+  const isDrawingBlocked = (row: number, col: number) =>
+    isVisualizationRunningRef.current ||
+    checkIfStartOrEnd(row, col) ||
+    maze !== "NONE";
+
   const handleMouseDown = (row: number, col: number) => {
-    if (isVisualizationRunningRef.current || checkIfStartOrEnd(row, col)) {
+    if (isDrawingBlocked(row, col)) {
       return;
     }
 
@@ -24,7 +29,7 @@ export function Grid({
   };
 
   const handleMouseUp = (row: number, col: number) => {
-    if (isVisualizationRunningRef.current || checkIfStartOrEnd(row, col)) {
+    if (isDrawingBlocked(row, col)) {
       return;
     }
 
@@ -32,7 +37,7 @@ export function Grid({
   };
 
   const handleMouseEnter = (row: number, col: number) => {
-    if (isVisualizationRunningRef.current || checkIfStartOrEnd(row, col)) {
+    if (isDrawingBlocked(row, col)) {
       return;
     }
     if (isMouseDown) {
