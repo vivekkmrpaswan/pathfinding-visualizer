@@ -88,18 +88,18 @@ export function Nav({
   };
 
   return (
-    <div className="flex flex-col items-start h-screen w-64 shrink-0 border-r shadow-gray-600 px-5 py-8 overflow-y-auto">
-      <div className="flex items-center gap-2 w-full mb-8">
+    <div className="flex shrink-0 shadow-gray-600 landscape:flex-col landscape:items-start landscape:h-screen landscape:w-64 landscape:border-r landscape:px-5 landscape:py-8 landscape:overflow-y-auto portrait:flex-row portrait:items-center portrait:w-full portrait:border-t portrait:px-4 portrait:py-3 portrait:overflow-x-auto portrait:gap-3">
+      <div className="flex items-center gap-2 landscape:w-full landscape:mb-8 portrait:w-auto">
         <img
           src="/pathfinding-visualizer.png"
           alt="pathfinding visualizer"
-          className="w-8 h-8"
+          className="w-8 h-8 portrait:w-12 portrait:h-12"
         />
-        <h1 className="font-bold leading-tight text-start mb-2">
+        <h1 className="font-bold leading-tight text-start landscape:block portrait:hidden">
           Pathfinding <span className="text-amber-400">Visualizer</span>
         </h1>
       </div>
-      <div className="flex flex-col space-y-5 w-full">
+      <div className="flex landscape:flex-col landscape:space-y-5 landscape:w-full portrait:flex-row portrait:flex-1 portrait:items-center portrait:gap-3">
         <Select
           label="maze"
           value={maze}

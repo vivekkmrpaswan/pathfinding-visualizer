@@ -15,7 +15,7 @@ export function PlayButton({
     <button
       disabled={isDisabled}
       onClick={handlerRunVisualizer}
-      className="w-full flex items-center justify-center gap-2 rounded-lg disabled:pointer-events-none disabled:opacity-50 transition ease-in p-2.5 shadow-md bg-green-500 hover:bg-green-600 border-none active:ring-green-300 focus:outline-none focus:ring focus:ring-green-300 focus:ring-opacity-30 font-medium"
+      className="landscape:w-full portrait:w-auto portrait:shrink-0 flex items-center justify-center gap-2 rounded-lg w-full disabled:pointer-events-none disabled:opacity-50 transition ease-in p-2.5 shadow-md bg-green-500 hover:bg-green-600 border-none active:ring-green-300 focus:outline-none focus:ring focus:ring-green-300 focus:ring-opacity-30 font-medium"
     >
       {isGraphVisualized ? (
         <>

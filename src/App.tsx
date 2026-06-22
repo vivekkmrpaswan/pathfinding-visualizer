@@ -12,11 +12,11 @@ function App() {
     <PathfindingProvider>
       <TileProvider>
         <SpeedProvider>
-          <div className="h-svh w-svw flex">
+          <div className="h-svh w-svw flex landscape:flex-row portrait:flex-col overflow-hidden">
             <Nav isVisualizationRunningRef={isVisualizationRunningRef} />
-            <div className="flex-1 flex overflow-auto pt-2 pb-2">
+            <main className="flex-1 min-h-0 min-w-0 overflow-auto">
               <Grid isVisualizationRunningRef={isVisualizationRunningRef} />
-            </div>
+            </main>
           </div>
         </SpeedProvider>
       </TileProvider>
