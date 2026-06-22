@@ -163,6 +163,7 @@ export function Grid({
                   key={tileIndex}
                   row={tile.row}
                   col={tile.col}
+                  totalRows={grid.length}
                   isEnd={isEnd}
                   isStart={isStart}
                   isPath={isPath}
