@@ -6,12 +6,77 @@ import {
 } from "../../../utils/heuristics";
 import { GridType, TileType } from "../../../utils/types";
 
+function compareByCost(
+  a: TileType,
+  b: TileType,
+  functionCost: number[][],
+): number {
+  if (functionCost[a.row][a.col] === functionCost[b.row][b.col]) {
+    return b.distance - a.distance;
+  }
+  return functionCost[a.row][a.col] - functionCost[b.row][b.col];
+}
+
+function relaxNeighbor(
+  neighbor: TileType,
+  currentTile: TileType,
+  functionCost: number[][],
+  heuristicCost: number[][],
+  unTraversedTiles: TileType[],
+) {
+  const distanceToNeighbor = currentTile.distance + 1;
+
+  if (distanceToNeighbor >= neighbor.distance) {
+    return;
+  }
+
+  dropFromQueue(neighbor, unTraversedTiles);
+  neighbor.distance = distanceToNeighbor;
+  functionCost[neighbor.row][neighbor.col] =
+    neighbor.distance + heuristicCost[neighbor.row][neighbor.col];
+  neighbor.parent = currentTile;
+  unTraversedTiles.push(neighbor);
+}
+
+function relaxNeighbors(
+  grid: GridType,
+  currentTile: TileType,
+  functionCost: number[][],
+  heuristicCost: number[][],
+  unTraversedTiles: TileType[],
+) {
+  const neighbors = getUntraversedNeighbors(grid, currentTile);
+
+  for (const neighbor of neighbors) {
+    relaxNeighbor(
+      neighbor,
+      currentTile,
+      functionCost,
+      heuristicCost,
+      unTraversedTiles,
+    );
+  }
+}
+
+function buildPath(grid: GridType, endTile: TileType): TileType[] {
+  const path: TileType[] = [];
+  let current = grid[endTile.row][endTile.col];
+
+  while (current !== null) {
+    current.isPath = true;
+    path.unshift(current);
+    current = current.parent!;
+  }
+
+  return path;
+}
+
 export const aStar = (
   grid: GridType,
   startTile: TileType,
   endTile: TileType,
 ) => {
-  const traversedTiles = [];
+  const traversedTiles: TileType[] = [];
   const heuristicCost = initiHeuristicCost(grid, endTile);
   const functionCost = initFunctionCost();
 
@@ -24,48 +89,28 @@ export const aStar = (
   const unTraversedTiles = [base];
 
   while (unTraversedTiles.length > 0) {
-    unTraversedTiles.sort((a, b) => {
-      if (functionCost[a.row][a.col] === functionCost[b.row][b.col]) {
-        return b.distance - a.distance;
-      }
-      return functionCost[a.row][a.col] - functionCost[b.row][b.col];
-    });
+    unTraversedTiles.sort((a, b) => compareByCost(a, b, functionCost));
 
     const currentTile = unTraversedTiles.shift();
 
-    if (currentTile) {
-      if (currentTile.isWall) continue;
-      if (currentTile.distance === Infinity) break;
-      currentTile.isTraversed = true;
-      traversedTiles.push(currentTile);
+    if (!currentTile || currentTile.isWall) continue;
+    if (currentTile.distance === Infinity) break;
 
-      if (isEqual(currentTile, endTile)) break;
+    currentTile.isTraversed = true;
+    traversedTiles.push(currentTile);
 
-      const neighbors = getUntraversedNeighbors(grid, currentTile);
+    if (isEqual(currentTile, endTile)) break;
 
-      for (let i = 0; i < neighbors.length; i++) {
-        const distanceToNeighbor = currentTile.distance + 1;
-        if (distanceToNeighbor < neighbors[i].distance) {
-          dropFromQueue(neighbors[i], unTraversedTiles);
-          neighbors[i].distance = distanceToNeighbor;
-          functionCost[neighbors[i].row][neighbors[i].col] =
-            neighbors[i].distance +
-            heuristicCost[neighbors[i].row][neighbors[i].col];
-          neighbors[i].parent = currentTile;
-          unTraversedTiles.push(neighbors[i]);
-        }
-      }
-    }
+    relaxNeighbors(
+      grid,
+      currentTile,
+      functionCost,
+      heuristicCost,
+      unTraversedTiles,
+    );
   }
 
-  const path = [];
-  let current = grid[endTile.row][endTile.col];
-
-  while (current !== null) {
-    current.isPath = true;
-    path.unshift(current);
-    current = current.parent!;
-  }
+  const path = buildPath(grid, endTile);
 
   return { traversedTiles, path };
 };

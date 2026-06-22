@@ -14,7 +14,7 @@ function App() {
         <SpeedProvider>
           <div className="h-svh w-svw flex">
             <Nav isVisualizationRunningRef={isVisualizationRunningRef} />
-            <div className="flex-1 flex items-center justify-center pb-7 overflow-auto">
+            <div className="flex-1 flex overflow-auto pt-2 pb-2">
               <Grid isVisualizationRunningRef={isVisualizationRunningRef} />
             </div>
           </div>

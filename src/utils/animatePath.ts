@@ -1,5 +1,6 @@
 import {
   EXTENDED_SLEEP_TIME,
+  PATH_ANIMATION_DURATION,
   PATH_TILE_STYLE,
   SLEEP_TIME,
   SPEEDS,
@@ -46,7 +47,7 @@ export const animatePath = (
                   `${PATH_TILE_STYLE} animate-path`;
               }
               if (i === path.length - 1) {
-                resolve();
+                setTimeout(resolve, PATH_ANIMATION_DURATION);
               }
             },
             EXTENDED_SLEEP_TIME * i * speedMultiplier,

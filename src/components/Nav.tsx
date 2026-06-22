@@ -121,7 +121,7 @@ export function Nav({
           value={speed}
           options={SPEEDS}
           onChange={(e) => {
-            setSpeed(Number.parseInt(e.target.value) as SpeedType);
+            setSpeed(Number.parseFloat(e.target.value) as SpeedType);
           }}
         />
         <PlayButton
