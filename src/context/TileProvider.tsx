@@ -1,17 +1,21 @@
 // TileProvider.tsx
-import { ReactNode, useMemo, useState } from "react";
+import { ReactNode, useEffect, useMemo, useState } from "react";
 import { TileType } from "../utils/types";
-import {
-  END_TILE_CONFIGURATION,
-  START_TILE_CONFIGURATION,
-} from "../utils/constants";
+import { createStartTile, createEndTile } from "../utils/constants";
 import { TileContext } from "./TileContext";
+import { usePathfinding } from "../hooks/usePathfinding";
 
 export const TileProvider = ({ children }: { children: ReactNode }) => {
-  const [startTile, setStartTile] = useState<TileType>(
-    START_TILE_CONFIGURATION,
-  );
-  const [endTile, setEndTile] = useState<TileType>(END_TILE_CONFIGURATION);
+  const { rows, cols } = usePathfinding();
+
+  const [startTile, setStartTile] = useState<TileType>(createStartTile());
+
+  const [endTile, setEndTile] = useState<TileType>(createEndTile(rows, cols));
+
+  useEffect(() => {
+    setStartTile(createStartTile());
+    setEndTile(createEndTile(rows, cols));
+  }, [rows, cols]);
 
   const value = useMemo(
     () => ({ startTile, setStartTile, endTile, setEndTile }),

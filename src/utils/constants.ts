@@ -1,34 +1,36 @@
-import { AlgorithmSelectType, MazeSelectType, SpeedSelectType } from "./types";
+import {
+  AlgorithmSelectType,
+  MazeSelectType,
+  SpeedSelectType,
+  TileType,
+} from "./types";
 
-export const MAX_ROWS = 39;
-export const MAX_COLS = 49;
-
-export const START_TILE_CONFIGURATION = {
+export const createStartTile = (): TileType => ({
   row: 1,
   col: 1,
   isEnd: false,
   isWall: false,
   isPath: false,
   distance: 0,
-  isStart: false,
+  isStart: true,
   isTraversed: false,
   parent: null,
-};
+});
 
-export const END_TILE_CONFIGURATION = {
-  row: MAX_ROWS - 2,
-  col: MAX_COLS - 2,
-  isEnd: false,
+export const createEndTile = (rows: number, cols: number): TileType => ({
+  row: rows - 2,
+  col: cols - 2,
+  isEnd: true,
   isWall: false,
   isPath: false,
-  distance: 0,
+  distance: Infinity,
   isStart: false,
   isTraversed: false,
   parent: null,
-};
+});
 
 export const TILE_STYLE =
-  "lg:w-[17px] md:w-[15px] xs:w-[8px] w-[7px] lg:h-[17px] md:h-[15px] xs:h-[8px] h-[7px] border-t border-r border-sky-200 ";
+  "w-[14px] h-[14px] md:w-[15px] md:h-[15px] lg:w-[17px] lg:h-[17px] border-t border-r border-sky-200";
 
 export const TRAVERSED_TILE_STYLE = TILE_STYLE + " bg-cyan-400";
 export const START_TILE_STYLE = TILE_STYLE + " bg-green-400";

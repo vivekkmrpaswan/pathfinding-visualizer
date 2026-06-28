@@ -8,17 +8,38 @@ export function useGridDimensions() {
 
   useEffect(() => {
     const updateDimensions = () => {
+      const isPortrait = window.innerHeight > window.innerWidth;
+
+      // Mobile
       if (window.innerWidth < 640) {
-        setDimensions({
-          rows: 21,
-          cols: 25,
-        });
-      } else if (window.innerWidth < 1024) {
-        setDimensions({
-          rows: 31,
-          cols: 39,
-        });
-      } else {
+        setDimensions(
+          isPortrait
+            ? {
+                rows: 43,
+                cols: 27,
+              }
+            : {
+                rows: 27,
+                cols: 43,
+              },
+        );
+      }
+      // Tablet
+      else if (window.innerWidth < 1024) {
+        setDimensions(
+          isPortrait
+            ? {
+                rows: 47,
+                cols: 39,
+              }
+            : {
+                rows: 39,
+                cols: 55,
+              },
+        );
+      }
+      // Desktop
+      else {
         setDimensions({
           rows: 39,
           cols: 49,

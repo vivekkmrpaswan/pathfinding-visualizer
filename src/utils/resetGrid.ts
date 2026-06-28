@@ -1,13 +1,8 @@
-import {
-  END_TILE_CONFIGURATION,
-  MAX_ROWS,
-  START_TILE_CONFIGURATION,
-  TILE_STYLE,
-} from "./constants";
+import { TILE_STYLE } from "./constants";
 import { isEqual } from "./helpers";
 import { GridType, TileType } from "./types";
 
-function resetTileVisuals(tile: TileType) {
+function resetTileVisuals(tile: TileType, totalRows: number) {
   const tileElement = document.getElementById(`${tile.row}-${tile.col}`);
 
   if (!tileElement) {
@@ -16,7 +11,7 @@ function resetTileVisuals(tile: TileType) {
 
   tileElement.className = TILE_STYLE;
 
-  if (tile.row === MAX_ROWS - 1) {
+  if (tile.row === totalRows - 1) {
     tileElement.classList.add("border-b");
   }
 
@@ -25,7 +20,12 @@ function resetTileVisuals(tile: TileType) {
   }
 }
 
-function resetTile(tile: TileType, startTile: TileType, endTile: TileType) {
+function resetTile(
+  tile: TileType,
+  startTile: TileType,
+  endTile: TileType,
+  totalRows: number,
+) {
   tile.distance = Infinity;
   tile.isTraversed = false;
   tile.isPath = false;
@@ -38,21 +38,22 @@ function resetTile(tile: TileType, startTile: TileType, endTile: TileType) {
     return;
   }
 
-  resetTileVisuals(tile);
+  resetTileVisuals(tile, totalRows);
 }
 
 export const resetGrid = ({
   grid,
-  startTile = START_TILE_CONFIGURATION,
-  endTile = END_TILE_CONFIGURATION,
+  startTile,
+  endTile,
 }: {
   grid: GridType;
-  startTile?: TileType;
-  endTile?: TileType;
+  startTile: TileType;
+  endTile: TileType;
 }) => {
+  const totalRows = grid.length;
   for (const row of grid) {
     for (const tile of row) {
-      resetTile(tile, startTile, endTile);
+      resetTile(tile, startTile, endTile, totalRows);
     }
   }
 };

@@ -1,7 +1,6 @@
 import { GridType, SpeedType, TileType } from "../../../utils/types";
 import { createWall } from "../../../utils/createWall";
 import { getRandInt, isEqual, sleep } from "../../../utils/helpers";
-import { MAX_COLS, MAX_ROWS } from "../../../utils/constants";
 import { destroyWall } from "../../../utils/destroyWall";
 
 function buildWallLattice(
@@ -26,10 +25,13 @@ async function carveCell(
   row: number,
   col: number,
   speed: SpeedType,
+  totalRows: number,
+  totalCols: number,
 ) {
-  const isBottomRightCorner = row === MAX_ROWS - 2 && col === MAX_COLS - 2;
-  const isLastRow = row === MAX_ROWS - 2;
-  const isLastCol = col === MAX_COLS - 2;
+  const isBottomRightCorner = row === totalRows - 2 && col === totalCols - 2;
+
+  const isLastRow = row === totalRows - 2;
+  const isLastCol = col === totalCols - 2;
 
   if (isBottomRightCorner) {
     return;
@@ -48,10 +50,15 @@ async function carveCell(
   await destroyWall(grid, row, col, getRandInt(0, 2), speed);
 }
 
-async function carvePassages(grid: GridType, speed: SpeedType) {
-  for (let row = 1; row < MAX_ROWS; row += 2) {
-    for (let col = 1; col < MAX_COLS; col += 2) {
-      await carveCell(grid, row, col, speed);
+async function carvePassages(
+  grid: GridType,
+  speed: SpeedType,
+  totalRows: number,
+  totalCols: number,
+) {
+  for (let row = 1; row < totalRows; row += 2) {
+    for (let col = 1; col < totalCols; col += 2) {
+      await carveCell(grid, row, col, speed, totalRows, totalCols);
     }
   }
 }
@@ -63,11 +70,13 @@ export const binaryTree = async (
   setIsDisabled: (isDisabled: boolean) => void,
   speed: SpeedType,
 ) => {
-  createWall(startTile, endTile, speed);
-  await sleep(MAX_ROWS * MAX_COLS);
+  const totalRows = grid.length;
+  const totalCols = grid[0].length;
+  createWall(grid, startTile, endTile, speed);
+  await sleep(totalRows * totalCols);
 
   buildWallLattice(grid, startTile, endTile);
-  await carvePassages(grid, speed);
+  await carvePassages(grid, speed, totalRows, totalCols);
 
   setIsDisabled(false);
 };
