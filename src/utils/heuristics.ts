@@ -12,11 +12,11 @@ const retriveHeuristicCost = (currentTile: TileType, endTile: TileType) => {
 export const initiHeuristicCost = (grid: GridType, endTile: TileType) => {
   const heuristicCost = [];
 
-  for (let i = 0; i < grid.length; i++) {
+  for (const element of grid) {
     const row = [];
 
     for (let j = 0; j < grid[0].length; j++) {
-      row.push(retriveHeuristicCost(grid[i][j], endTile));
+      row.push(retriveHeuristicCost(element[j], endTile));
     }
 
     heuristicCost.push(row);

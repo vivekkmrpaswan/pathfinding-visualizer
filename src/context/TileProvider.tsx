@@ -1,4 +1,3 @@
-// TileProvider.tsx
 import { ReactNode, useEffect, useMemo, useState } from "react";
 import { TileType } from "../utils/types";
 import { createStartTile, createEndTile } from "../utils/constants";

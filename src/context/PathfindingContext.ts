@@ -1,5 +1,4 @@
 import { createContext } from "react";
-
 import { AlgorithmType, GridType, MazeType, TileType } from "../utils/types";
 
 export interface PathfindingContextInterface {
@@ -14,6 +13,7 @@ export interface PathfindingContextInterface {
 
   rows: number;
   cols: number;
+  setDimensions: (rows: number, cols: number) => void;
 
   startTile: TileType;
   setStartTile: (tile: TileType) => void;
