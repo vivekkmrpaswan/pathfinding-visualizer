@@ -29,8 +29,11 @@ export const createEndTile = (rows: number, cols: number): TileType => ({
   parent: null,
 });
 
+// export const TILE_STYLE =
+//   "w-[14px] h-[14px] md:w-[15px] md:h-[15px] lg:w-[17px] lg:h-[17px] border-t border-r border-sky-200";
+
 export const TILE_STYLE =
-  "w-[14px] h-[14px] md:w-[15px] md:h-[15px] lg:w-[17px] lg:h-[17px] border-t border-r border-sky-200";
+  "w-[var(--tile-size)] h-[var(--tile-size)] border-t border-r border-sky-200";
 
 export const TRAVERSED_TILE_STYLE = TILE_STYLE + " bg-cyan-400";
 export const START_TILE_STYLE = TILE_STYLE + " bg-green-400";
@@ -45,10 +48,26 @@ export const MAZES: MazeSelectType[] = [
 ];
 
 export const PATHFINDING_ALGORITHMS: AlgorithmSelectType[] = [
-  { name: "Dijkstra", value: "DIJKSTRA" },
-  { name: "A-Star", value: "A_STAR" },
-  { name: "Breath First Search", value: "BFS" },
-  { name: "Depth First Search", value: "DFS" },
+  {
+    name: "Dijkstra",
+    shortName: "Dijkstra",
+    value: "DIJKSTRA",
+  },
+  {
+    name: "A-Star",
+    shortName: "A*",
+    value: "A_STAR",
+  },
+  {
+    name: "Breadth First Search",
+    shortName: "BFS",
+    value: "BFS",
+  },
+  {
+    name: "Depth First Search",
+    shortName: "DFS",
+    value: "DFS",
+  },
 ];
 
 export const SPEEDS: SpeedSelectType[] = [

@@ -84,7 +84,7 @@ export function Nav({
           alt="pathfinding visualizer"
           className="w-8 h-8"
         />
-        <h1 className="font-bold leading-tight text-start landscape:block portrait:hidden">
+        <h1 className="font-bold leading-tight text-start landscape:block">
           Pathfinding <span className="text-amber-400">Visualizer</span>
         </h1>
       </div>

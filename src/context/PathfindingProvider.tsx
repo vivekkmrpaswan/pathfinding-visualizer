@@ -33,9 +33,14 @@ export const PathfindingProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const newStartTile = createStartTile();
     const newEndTile = createEndTile(rows, cols);
+
     setStartTile(newStartTile);
     setEndTile(newEndTile);
     setGrid(createGrid(rows, cols, newStartTile, newEndTile));
+
+    // Reset UI state after a resize
+    setMaze("NONE");
+    setIsGraphVisualized(false);
   }, [rows, cols]);
 
   const value = useMemo(

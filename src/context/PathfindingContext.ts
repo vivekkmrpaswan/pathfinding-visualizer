@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, Dispatch, SetStateAction } from "react";
 import { AlgorithmType, GridType, MazeType, TileType } from "../utils/types";
 
 export interface PathfindingContextInterface {
@@ -9,7 +9,7 @@ export interface PathfindingContextInterface {
   setMaze: (maze: MazeType) => void;
 
   grid: GridType;
-  setGrid: (grid: GridType) => void;
+  setGrid: Dispatch<SetStateAction<GridType>>;
 
   rows: number;
   cols: number;

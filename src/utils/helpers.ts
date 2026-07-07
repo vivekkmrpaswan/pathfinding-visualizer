@@ -62,6 +62,19 @@ export const createNewGrid = (grid: GridType, row: number, col: number) => {
   return newGrid;
 };
 
+export function setWallAt(
+  grid: GridType,
+  row: number,
+  col: number,
+  isWall: boolean,
+): GridType {
+  return grid.map((r, rIdx) =>
+    rIdx !== row
+      ? r
+      : r.map((tile, cIdx) => (cIdx !== col ? tile : { ...tile, isWall })),
+  );
+}
+
 export const isEqual = (a: TileType, b: TileType) => {
   return a.row === b.row && a.col === b.col;
 };

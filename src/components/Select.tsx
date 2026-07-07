@@ -1,5 +1,6 @@
 import { ChangeEvent } from "react";
 
+const isMobile = window.innerWidth < 640;
 export function Select({
   value,
   onChange,
@@ -10,7 +11,11 @@ export function Select({
   value: string | number;
   label: string;
   onChange: (value: ChangeEvent<HTMLSelectElement>) => void;
-  options: { value: string | number; name: string }[];
+  options: {
+    value: string | number;
+    name: string;
+    shortName?: string;
+  }[];
   isDisabled?: boolean;
 }>) {
   return (
@@ -27,7 +32,7 @@ export function Select({
       >
         {options.map((option) => (
           <option value={option.value} key={option.value}>
-            {option.name}
+            {isMobile && option.shortName ? option.shortName : option.name}
           </option>
         ))}
       </select>
