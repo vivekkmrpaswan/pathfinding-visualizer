@@ -1,6 +1,6 @@
 import { ChangeEvent } from "react";
+import { useIsMobile } from "../hooks/useIsMobile";
 
-const isMobile = window.innerWidth < 640;
 export function Select({
   value,
   onChange,
@@ -18,6 +18,8 @@ export function Select({
   }[];
   isDisabled?: boolean;
 }>) {
+  const isMobile = useIsMobile();
+
   return (
     <div className="flex flex-col items-start gap-1 portrait:flex-1">
       <label className="text-xs text-gray-300 ml-1 portrait:hidden">

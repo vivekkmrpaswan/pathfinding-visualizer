@@ -29,7 +29,8 @@ function getTileFromPoint(
 export function Grid({
   isVisualizationRunningRef,
 }: Readonly<{ isVisualizationRunningRef: MutableRefObject<boolean> }>) {
-  const { grid, setGrid, maze, rows, cols, setDimensions } = usePathfinding();
+  const { grid, setGrid, maze, rows, cols, setDimensions, isGraphVisualized } =
+    usePathfinding();
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [tileSize, setTileSize] = useState(getTileSize());
   const containerRef = useRef<HTMLDivElement>(null);
@@ -72,12 +73,16 @@ export function Grid({
     updateDimensions();
 
     return () => observer.disconnect();
+    // isVisualizationRunningRef is a ref (stable identity, read at call time),
+    // so it's intentionally excluded from the dependency array.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setDimensions]);
 
   const isDrawingBlocked = (row: number, col: number) =>
     isVisualizationRunningRef.current ||
     checkIfStartOrEnd(row, col, rows, cols) ||
-    maze !== "NONE";
+    maze !== "NONE" ||
+    isGraphVisualized;
 
   const handleMouseDown = (row: number, col: number) => {
     if (isDrawingBlocked(row, col)) return;

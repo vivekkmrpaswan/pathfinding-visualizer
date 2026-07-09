@@ -1,50 +1,47 @@
-# React + TypeScript + Vite
+# Pathfinding Visualizer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An interactive, fully responsive pathfinding visualizer built with React, TypeScript, and Vite. Draw walls, generate mazes, and watch classic pathfinding algorithms search for the shortest path in real time — on desktop with a mouse or on mobile/tablet with touch.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Algorithms:** Breadth-First Search, Depth-First Search, Dijkstra's Algorithm, A*
+- **Maze generation:** Binary Tree, Recursive Division
+- **Interactive grid:** draw and erase walls with mouse or touch
+- **Responsive layout:** the grid dynamically sizes itself to the available screen space on desktop, tablet, mobile portrait, and mobile landscape
+- **Adjustable animation speed**
+- **Toast notifications** for orientation changes during an active animation
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- [React](https://react.dev/) 18
+- [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vite.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- React Context API for state management
+- [Sonner](https://sonner.emilkowal.ski/) for toast notifications
 
-- Configure the top-level `parserOptions` property like this:
+## Running Locally
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+\`\`\`bash
+# Install dependencies
+npm install
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+# Start the dev server
+npm run dev
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+# Type-check and build for production
+npm run build
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+# Preview the production build locally
+npm run preview
+\`\`\`
+
+## How It Works
+
+- The grid dynamically calculates rows/columns from the available container size using a `ResizeObserver`, so it fills the screen exactly on any device.
+- Wall drawing supports both mouse (`mousedown`/`mouseenter`) and touch (Pointer Events with `elementFromPoint`) interactions.
+- To keep animations visually consistent, the grid intentionally ignores resize events while a maze generation or pathfinding animation is running, and shows an informational toast if the device is rotated mid-animation.
+
+## License
+
+This project is open source and available for personal or educational use.
