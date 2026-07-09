@@ -78,7 +78,7 @@ export const aStar = (
 ) => {
   const traversedTiles: TileType[] = [];
   const heuristicCost = initiHeuristicCost(grid, endTile);
-  const functionCost = initFunctionCost();
+  const functionCost = initFunctionCost(grid);
 
   const base = grid[startTile.row][startTile.col];
   base.distance = 0;

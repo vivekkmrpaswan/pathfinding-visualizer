@@ -1,7 +1,6 @@
 import { twMerge } from "tailwind-merge";
 import {
   END_TILE_STYLE,
-  MAX_ROWS,
   PATH_TILE_STYLE,
   START_TILE_STYLE,
   TILE_STYLE,
@@ -14,6 +13,7 @@ type MouseFunction = (row: number, col: number) => void;
 export function Tile({
   row,
   col,
+  totalRows,
   isStart,
   isEnd,
   isTraversed,
@@ -25,6 +25,7 @@ export function Tile({
 }: Readonly<{
   row: number;
   col: number;
+  totalRows: number;
   isStart: boolean;
   isEnd: boolean;
   isTraversed: boolean;
@@ -52,7 +53,7 @@ export function Tile({
 
   let borderStyle;
 
-  if (row === MAX_ROWS - 1) {
+  if (row === totalRows - 1) {
     borderStyle = "border-b";
   } else if (col === 0) {
     borderStyle = "border-l";
@@ -60,7 +61,7 @@ export function Tile({
     borderStyle = "";
   }
 
-  const edgeStyle = row === MAX_ROWS - 1 && col === 0 ? "border-l" : "";
+  const edgeStyle = row === totalRows - 1 && col === 0 ? "border-l" : "";
   return (
     <div // NOSONAR-drawable grid cell, one of ~1,900 tiles; making each one individually
       // focusable/tabbable would hurt keyboard navigation more than it helps for this project's scope

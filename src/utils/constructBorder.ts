@@ -1,4 +1,4 @@
-import { MAX_COLS, MAX_ROWS, SLEEP_TIME, WALL_TILE_STYLE } from "./constants";
+import { SLEEP_TIME, WALL_TILE_STYLE } from "./constants";
 import { isEqual, sleep } from "./helpers";
 import { GridType, TileType } from "./types";
 
@@ -12,8 +12,8 @@ const BORDER_DIRECTIONS: Direction[] = [
   { row: -1, col: 0 },
 ];
 
-function isInBounds(row: number, col: number): boolean {
-  return row >= 0 && row < MAX_ROWS && col >= 0 && col < MAX_COLS;
+function isInBounds(row: number, col: number, grid: GridType): boolean {
+  return row >= 0 && row < grid.length && col >= 0 && col < grid[0].length;
 }
 
 function applyWallStyle(row: number, col: number) {
@@ -56,7 +56,7 @@ async function walkEdge(
   endTile: TileType,
 ) {
   while (
-    isInBounds(position.row + direction.row, position.col + direction.col)
+    isInBounds(position.row + direction.row, position.col + direction.col, grid)
   ) {
     position.row += direction.row;
     position.col += direction.col;
@@ -65,11 +65,18 @@ async function walkEdge(
   }
 }
 
-function clampToBounds(position: Position) {
+function clampToBounds(position: Position, grid: GridType) {
   if (position.row < 0) position.row = 0;
-  if (position.row >= MAX_ROWS) position.row = MAX_ROWS - 1;
+
+  if (position.row >= grid.length) {
+    position.row = grid.length - 1;
+  }
+
   if (position.col < 0) position.col = 0;
-  if (position.col >= MAX_COLS) position.col = MAX_COLS - 1;
+
+  if (position.col >= grid[0].length) {
+    position.col = grid[0].length - 1;
+  }
 }
 
 export async function constructBorder(
@@ -81,6 +88,6 @@ export async function constructBorder(
 
   for (const direction of BORDER_DIRECTIONS) {
     await walkEdge(grid, position, direction, startTile, endTile);
-    clampToBounds(position);
+    clampToBounds(position, grid);
   }
 }
