@@ -37,42 +37,34 @@ export function Grid({
   const isDrawingRef = useRef(false);
   const lastDrawnTileRef = useRef<{ row: number; col: number } | null>(null);
   const drawModeRef = useRef<boolean | null>(null); // true = adding walls, false = erasing
-  console.log(
-    "Grid render — wall count:",
-    grid.flat().filter((t) => t.isWall).length,
-    "grid size:",
-    grid.length,
-    "x",
-    grid[0]?.length,
-  );
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
     const updateDimensions = () => {
+      // Ignore resize while a maze/pathfinding animation is running
+      if (isVisualizationRunningRef.current) return;
+
       const currentTileSize = getTileSize();
       setTileSize(currentTileSize);
 
       const padding = 32;
       const availW = container.clientWidth - padding;
       const availH = container.clientHeight - padding;
+
       if (availW <= 0 || availH <= 0) return;
 
       let newCols = Math.floor(availW / currentTileSize);
       let newRows = Math.floor(availH / currentTileSize);
+
       if (newCols % 2 === 0) newCols--;
       if (newRows % 2 === 0) newRows--;
+
       newCols = Math.max(newCols, 5);
       newRows = Math.max(newRows, 5);
+
       setDimensions(newRows, newCols);
-      console.log("ResizeObserver", {
-        width: container.clientWidth,
-        height: container.clientHeight,
-        tileSize: currentTileSize,
-        rows: newRows,
-        cols: newCols,
-      });
     };
 
     const observer = new ResizeObserver(updateDimensions);

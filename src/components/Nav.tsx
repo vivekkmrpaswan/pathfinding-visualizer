@@ -15,11 +15,21 @@ import { useSpeed } from "../hooks/useSpeed";
 import { PlayButton } from "./PlayButton";
 import { runPathfindingAlgorithm } from "../utils/runPathfindingAlgorithm";
 import { animatePath } from "../utils/animatePath";
+import { toast } from "sonner";
 
 export function Nav({
   isVisualizationRunningRef,
 }: Readonly<{ isVisualizationRunningRef: MutableRefObject<boolean> }>) {
   const [isDisabled, setIsDisabled] = useState(false);
+  const showOrientationWarning = () => {
+    toast.info(
+      "Keep your device in its current orientation while the animation is running. Rotating your device will reset the current visualization.",
+      {
+        id: "orientation-warning",
+        duration: 5000,
+      },
+    );
+  };
   const {
     maze,
     setMaze,
@@ -39,10 +49,22 @@ export function Nav({
       resetGrid({ grid, startTile, endTile });
       return;
     }
+
+    showOrientationWarning();
+
     setMaze(maze);
     setIsDisabled(true);
     resetGrid({ grid, startTile, endTile });
-    runMazeAlgorithm({ maze, grid, startTile, endTile, setIsDisabled, speed });
+
+    runMazeAlgorithm({
+      maze,
+      grid,
+      startTile,
+      endTile,
+      setIsDisabled,
+      speed,
+    });
+
     setGrid(grid.slice());
     setIsGraphVisualized(false);
   };
@@ -54,6 +76,8 @@ export function Nav({
       resetGrid({ grid: grid.slice(), startTile, endTile });
       return;
     }
+
+    showOrientationWarning();
 
     const { traversedTiles, path } = runPathfindingAlgorithm({
       algorithm,
@@ -67,6 +91,7 @@ export function Nav({
 
     animatePath(traversedTiles, path, startTile, endTile, speed).then(() => {
       setGrid(grid.slice());
+
       setTimeout(() => {
         setIsGraphVisualized(true);
         setIsDisabled(false);
@@ -76,7 +101,7 @@ export function Nav({
   };
 
   return (
-    <div className="flex shrink-0 shadow-gray-600 landscape:flex-col landscape:items-start landscape:h-screen landscape:w-64 landscape:border-r landscape:px-5 landscape:py-8 landscape:overflow-y-auto portrait:flex-row portrait:flex-wrap portrait:w-full portrait:border-b portrait:px-4 portrait:py-2 portrait:gap-3">
+    <div className="flex shrink-0 shadow-gray-600 landscape:flex-col landscape:items-start landscape:h-full landscape:w-64 landscape:border-r landscape:px-5 landscape:py-8 landscape:overflow-y-auto portrait:flex-row portrait:flex-wrap portrait:w-full portrait:border-b portrait:px-4 portrait:py-2 portrait:gap-3">
       {/* Logo — portrait row 1 left, landscape column top */}
       <div className="flex items-center gap-2 landscape:w-full landscape:mb-8 portrait:shrink-0 portrait:order-1">
         <img
