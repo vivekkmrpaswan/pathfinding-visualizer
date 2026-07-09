@@ -72,20 +72,7 @@ src/
 
 **Touch drawing.** Wall drawing is built on Pointer Events rather than separate mouse/touch handlers, using `elementFromPoint` to resolve which tile is under the pointer during a drag. This lets one code path handle both mouse and touch input.
 
-**Animation-safe resizing.** Grid resizing is intentionally ignored while a maze is generating or a pathfinding animation is running (rather than trying to gracefully migrate in-flight animation state to a new grid shape, which added complexity without real UX benefit). If the device is rotated mid-animation, a toast explains why the layout didn't change and that finishing the animation will reset it — a deliberate trade-off of a small UX limitation for a much simpler, more predictable state model.
-
 **State management.** Grid/algorithm state, tile state, and animation speed each live in their own Context + Provider pair, split into separate files specifically so Vite's Fast Refresh doesn't break during development (a component file exporting both a component and a non-component value opts that file out of Fast Refresh).
-
-## Known Limitations
-
-- Rotating the device mid-animation resets the current visualization by design (see above)
-- No persistence — refreshing the page clears the current grid/maze
-
-## Possible Improvements
-
-- Weighted tiles for algorithms like Dijkstra
-- Save/load custom grid layouts
-- Step-by-step manual playback controls
 
 ## License
 
